@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"
 import { fetchAllProducts } from "../redux/productSlice";
 import { addToCart } from "../redux/cartSlice";
-import { Search, Star } from "lucide-react";
+import { Search, Star, X } from "lucide-react";
+import Swal from "sweetalert2";
 import { BASE_URL } from "../utils/config";
 import axios from "axios";
 
@@ -10,14 +12,19 @@ const ProductPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categories, setCategories] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const { products, loading, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, [dispatch]);
+    if (products.length === 0) {
+      dispatch(fetchAllProducts());
+    }
+  }, [dispatch, products.length]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -34,12 +41,28 @@ const ProductPage = () => {
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "All" || product.category?.name === selectedCategory;
+    const matchesCategory = selectedCategory === "All" || product.category?.name === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const handleAddToCart = (product) => {
+    if (!user) {
+      Swal.fire({
+        title: "Oops!",
+        text: "You need to log in first!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Go to Sign Up",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/signup"); // Redirect ke halaman signup
+        }
+      });
+  
+      return;
+    }
+  
     const cartItem = {
       name: product.name,
       qty: 1,
@@ -50,6 +73,23 @@ const ProductPage = () => {
     };
   
     dispatch(addToCart(cartItem));
+    Swal.fire({
+      title: "Success!",
+      text: "Product added to cart",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  };
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+    setIsModalOpen(false);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -107,7 +147,8 @@ const ProductPage = () => {
           {filteredProducts.map((product) => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+              onClick={() => handleProductClick(product)}
             >
               <div className="relative w-full h-48">
                 <img
@@ -126,7 +167,10 @@ const ProductPage = () => {
                   <span className="text-xl font-bold text-gray-900">${product.price}</span>
                   <button
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    onClick={() => handleAddToCart(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToCart(product);
+                    }}
                   >
                     Add to Cart
                   </button>
@@ -136,6 +180,35 @@ const ProductPage = () => {
           ))}
         </div>
       </main>
+
+      {/* Modal */}
+      {isModalOpen && selectedProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 p-6">
+            <div className="flex justify-between items-center border-b pb-2 mb-4">
+              <h2 className="text-xl font-semibold">{selectedProduct.name}</h2>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-800">
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <img
+              src={`${BASE_URL}/${selectedProduct.picture}`}
+              alt={selectedProduct.name}
+              className="w-full h-64 object-cover rounded-lg mb-4"
+            />
+            <p className="text-gray-700">{selectedProduct.description}</p>
+            <div className="mt-4 flex justify-between items-center">
+              <span className="text-lg font-bold text-gray-900">${selectedProduct.price}</span>
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                onClick={() => handleAddToCart(selectedProduct)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

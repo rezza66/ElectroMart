@@ -34,8 +34,6 @@ app.use(categoryRoute);
 app.use(orderRoute);
 app.use(cartRoute);
 
-
-
 app.listen(port,  () => {
     console.log(`Server up and running on port ${port}`);
 })

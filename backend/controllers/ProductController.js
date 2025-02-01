@@ -1,10 +1,9 @@
 import Product from "../models/ProductModel.js";
-import Category from "../models/CategoryModel.js";
 
 // Create a new product
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, stock, category } = req.body;
+    const { name, description, price, stock, category, featured, weeklytopselling } = req.body;
 
     const newProduct = new Product({
       name,
@@ -12,7 +11,9 @@ export const createProduct = async (req, res) => {
       price,
       stock,
       category,
-      picture:req.file ? req.file.path : null,
+      picture: req.file ? req.file.path : null,
+      featured,
+      weeklytopselling,
     });
 
     const savedProduct = await newProduct.save();
@@ -48,11 +49,23 @@ export const getProductById = async (req, res) => {
 // Update a product
 export const updateProduct = async (req, res) => {
   try {
+    const { name, description, price, stock, category, featured, weeklytopselling } = req.body;
+
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        name,
+        description,
+        price,
+        stock,
+        category,
+        picture: req.file ? req.file.path : undefined,
+        featured,
+        weeklytopselling,
+      },
       { new: true }
     );
+
     if (!updatedProduct) {
       return res.status(404).json({ message: "Produk tidak ditemukan" });
     }
