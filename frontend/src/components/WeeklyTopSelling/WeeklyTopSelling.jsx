@@ -14,7 +14,7 @@ function WeeklyTopSelling() {
   const { products, loading, error } = useSelector((state) => state.products);
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
- 
+
   useEffect(() => {
     if (products.length === 0) {
       dispatch(fetchAllProducts());
@@ -22,7 +22,9 @@ function WeeklyTopSelling() {
   }, [dispatch, products.length]);
 
   // Filter hanya produk yang memiliki featured: true
-  const weeklyTopSellings = products.filter((product) => product.weeklyTopSelling);
+  const weeklyTopSellings = products.filter(
+    (product) => product.weeklyTopSelling
+  );
 
   const handleAddToCart = (product) => {
     if (!user) {
@@ -76,8 +78,10 @@ function WeeklyTopSelling() {
 
   return (
     <div className="py-12 md:px-20">
-    <h2 className="text-3xl font-bold text-center mb-8">Weekly Top Selling</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <h2 className="text-3xl font-bold text-center mb-8">
+        Weekly Top Selling
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {weeklyTopSellings.map((product) => (
           <div
             key={product._id}
@@ -92,22 +96,25 @@ function WeeklyTopSelling() {
               />
             </div>
             <div className="p-4 flex flex-col">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
-            <p className="text-gray-600 mb-4">${product.price}</p>
-            <div className="mt-auto flex justify-between items-center">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
-              onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToCart(product);
-                    }}
-              >
-                Add to Cart
-              </button>
-              <button className="text-orange-500 hover:underline text-sm">
-                View Details
-              </button>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {product.name}
+              </h3>
+              <p className="text-gray-600 mb-4">${product.price}</p>
+              <div className="mt-auto flex justify-between items-center">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart(product);
+                  }}
+                >
+                  Add to Cart
+                </button>
+                <button className="text-orange-500 hover:underline text-sm">
+                  View Details
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         ))}
       </div>
@@ -143,8 +150,8 @@ function WeeklyTopSelling() {
           </div>
         </div>
       )}
-  </div>
-);
+    </div>
+  );
 }
 
 export default WeeklyTopSelling;

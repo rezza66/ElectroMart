@@ -18,17 +18,6 @@ function Header() {
       0
     )
   );
-
-  // useEffect(() => {
-  //   const closeDropdown = (event) => {
-  //     if (!event.target.closest(".dropdown-container")) {
-  //       setIsDropdownOpen(false);
-  //     }
-  //   };
-  
-  //   document.addEventListener("click", closeDropdown);
-  //   return () => document.removeEventListener("click", closeDropdown);
-  // }, []);
   
   const handleLogout = () => {
     dispatch(logout());
@@ -41,7 +30,7 @@ function Header() {
   };
 
   return (
-    <nav className="bg-orange-600 text-white py-4 px-5 md:px-20 shadow-md">
+    <nav className="bg-orange-600 text-white py-4 px-5 md:px-20 shadow-md fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div>

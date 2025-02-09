@@ -4,6 +4,8 @@ import storage from "redux-persist/lib/storage"; // Menggunakan localStorage
 import authReducer from "./authSlice";
 import productReducer from "./productSlice";
 import cartReducer from "./cartSlice";
+import userReducer from "./userSlice";
+import orderReducer from "./orderSlice";
 
 // Konfigurasi Redux Persist untuk setiap slice
 const authPersistConfig = {
@@ -18,9 +20,11 @@ const cartPersistConfig = {
 
 // Kombinasikan reducer dengan persistReducer
 const rootReducer = {
-  auth: persistReducer(authPersistConfig, authReducer), // auth dipersist
-  products: productReducer,                            // Tidak dipersist
-  cart: persistReducer(cartPersistConfig, cartReducer), // cart dipersist
+  auth: persistReducer(authPersistConfig, authReducer), 
+  cart: persistReducer(cartPersistConfig, cartReducer),
+  products: productReducer,            
+  users: userReducer,            
+  orders: orderReducer,            
 };
 
 // Konfigurasi store

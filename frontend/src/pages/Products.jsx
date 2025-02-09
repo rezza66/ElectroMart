@@ -96,7 +96,7 @@ const ProductPage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen py-16 bg-gray-100">
       {/* Header */}
       <header className="bg-white shadow">
         <div className="container mx-auto px-20 py-6">
@@ -157,25 +157,26 @@ const ProductPage = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
-                <div className="flex items-center mb-2">
-                  <Star className="h-5 w-5 text-yellow-400 fill-current" />
-                  <span className="ml-1 text-gray-600">{product.rating}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xl font-bold text-gray-900">${product.price}</span>
-                  <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToCart(product);
-                    }}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
+              <div className="p-4 flex flex-col">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {product.name}
+              </h3>
+              <p className="text-gray-600 mb-4">${product.price}</p>
+              <div className="mt-auto flex justify-between items-center">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart(product);
+                  }}
+                >
+                  Add to Cart
+                </button>
+                <button className="text-orange-500 hover:underline text-sm">
+                  View Details
+                </button>
               </div>
+            </div>  
             </div>
           ))}
         </div>
