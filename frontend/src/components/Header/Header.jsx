@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/authSlice";
 import { clearCart } from "../../redux/cartSlice";
-import { BASE_URL } from "../../utils/config";
+import { ShoppingCart, User } from "lucide-react";
 
 function Header() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function Header() {
       0
     )
   );
-  
+
   const handleLogout = () => {
     dispatch(logout());
     dispatch(clearCart());
@@ -28,6 +28,11 @@ function Header() {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+  
 
   return (
     <nav className="bg-orange-600 text-white py-4 px-5 md:px-20 shadow-md fixed top-0 left-0 w-full z-50">
@@ -73,11 +78,11 @@ function Header() {
 
         {/* Right Section */}
         <div className="flex space-x-4 items-center">
-          <NavLink to="/cart" className="relative hover:underline">
-            <div className="relative mr-3">
-              <span>Cart</span>
+        <NavLink to="/cart" className="relative hover:underline">
+            <div className="relative">
+            <ShoppingCart className="w-6 h-6" />
               {cartCount > 0 && (
-                <span className="absolute top-0 left-7 w-5 h-5 bg-gray-400 text-white text-xs rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-5 h-5 bg-gray-400 text-white text-xs rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -91,39 +96,44 @@ function Header() {
                 className="flex items-center cursor-pointer"
                 onClick={toggleDropdown}
               >
-                <img
-                  src={`${BASE_URL}/${user.picture}`}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-full mr-2"
-                />
                 <span className="mr-2">{user.fullName}</span>
-                {user.role === "admin" && (
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                )}
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
               </div>
 
-              {/* Dropdown untuk Admin */}
-              {user.role === "admin" && isDropdownOpen && (
+              {/* Dropdown untuk User */}
+              {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-md shadow-lg">
-                  <NavLink
-                    to="/dashboard"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Dashboard
-                  </NavLink>
+                  {user.role === "user" && (
+                    <NavLink
+                      to="/profile"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={closeDropdown}
+                    >
+                      Profile
+                    </NavLink>
+                  )}
+                  {user.role === "admin" && (
+                    <NavLink
+                      to="/dashboard"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={closeDropdown}
+                    >
+                      Dashboard
+                    </NavLink>
+                  )}
                 </div>
               )}
             </div>

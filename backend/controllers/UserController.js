@@ -1,4 +1,5 @@
-import User from "../models/UserModel.js"
+import User from "../models/UserModel.js";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req,res) => {
     try {
@@ -9,14 +10,41 @@ export const getUsers = async (req,res) => {
     }
 }
 
-export const getUserById = async (req,res) => {
+export const getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        res.json(user)
+        const id = req.user.id; 
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(user);
     } catch (error) {
-        res.status(404).json({message: error.message})
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
-}
+};
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const id = req.user.id; // ID dari JWT
+        const user = await User.findById(id).select("-password"); 
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+
 
 export const saveUser = async (req,res) => {
     const user = new User(req.body);
@@ -28,15 +56,52 @@ export const saveUser = async (req,res) => {
     }
 }
 
-export const updateUser = async (req,res) => {
-    
-    try {
-        const updatedUser = await User.updateOne({_id:req.params.id}, {$set: req.body});
-        res.status(200).json(updatedUser)
-    } catch (error) {
-        res.status(400).json({message: error.message})
+
+// Update user
+export const updateUser = async (req, res) => {
+  try {
+    // Cari user berdasarkan ID
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
+
+    // Validasi agar hanya user sendiri atau admin yang bisa update
+    if (req.user.id !== user.id && req.user.role !== "admin") {
+      return res.status(403).json({ message: "Unauthorized to update this profile" });
+    }
+
+    // Hash password jika ada perubahan
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      req.body.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+    // Update user
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true, runValidators: true } // Mengembalikan data terbaru dan jalankan validasi
+    );
+
+    // Kirim data user yang diperbarui tanpa password
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: updatedUser._id,
+        fullName: updatedUser.fullName,
+        email: updatedUser.email,
+        address: updatedUser.address,
+        phone: updatedUser.phone,
+        picture: updatedUser.picture,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 
 export const deleteUser = async (req,res) => {
     

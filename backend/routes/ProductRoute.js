@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.get("/products", getAllProducts);  
 router.get("/product/:id", getProductById);  
-router.post("/product", protect, authorize('update', 'product'), upload, createProduct);  
+router.post("/product", protect, authorize('create', 'product'), upload, createProduct);  
 router.put("/product/:id", protect, authorize('update', 'product'), updateProduct);  
 router.delete("/product/:id", protect, authorize('delete', 'product'), deleteProduct);  
 

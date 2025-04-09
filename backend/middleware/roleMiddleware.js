@@ -8,13 +8,23 @@ const authorize = (action, subject) => {
 
     const ability = defineAbilitiesFor(req.user);
 
-    if (subject === 'order' && action === 'read' && req.user.role === 'admin') {
-      return next();
+    // Jika user bukan admin dan mencoba getUsers atau deleteUser, tolak akses
+    if (action === 'read' && subject === 'user' && req.path === '/users') {
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden: Only admin can see all users' });
+      }
     }
 
-    if (subject === 'order' && action === 'read' && req.params.userId) {
-      if (req.user.id !== req.params.userId) {
-        return res.status(403).json({ message: 'Forbidden' });
+    if (action === 'delete' && subject === 'user') {
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden: Only admin can delete users' });
+      }
+    }
+
+    // Jika user ingin read/update dirinya sendiri, cek berdasarkan id
+    if ((action === 'read' || action === 'update') && subject === 'user') {
+      if (req.params.id && req.user.id !== req.params.id) {
+        return res.status(403).json({ message: 'Forbidden: You can only manage your own account' });
       }
     }
 
@@ -27,3 +37,5 @@ const authorize = (action, subject) => {
 };
 
 export default authorize;
+
+

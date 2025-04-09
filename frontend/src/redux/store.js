@@ -18,12 +18,17 @@ const cartPersistConfig = {
   storage,
 };
 
+const userPersistConfig = {
+  key: "user",
+  storage,
+};
+
 // Kombinasikan reducer dengan persistReducer
 const rootReducer = {
   auth: persistReducer(authPersistConfig, authReducer), 
   cart: persistReducer(cartPersistConfig, cartReducer),
+  users: persistReducer(userPersistConfig, userReducer), // ✅ Persist untuk users
   products: productReducer,            
-  users: userReducer,            
   orders: orderReducer,            
 };
 

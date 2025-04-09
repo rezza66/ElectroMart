@@ -94,6 +94,62 @@ export const getUserOrders = async (req, res) => {
   }
 };
 
+export const getOrderById = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId)
+      .populate("user", "username email")
+      .populate("products.product", "name price")
+      .lean();
+
+    if (!order) {
+      return res.status(404).json({ message: "Pesanan tidak ditemukan!" });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: "Gagal mengambil pesanan", error: error.message });
+  }
+};
+
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ["Pending", "Processing", "Shipped", "Completed", "Cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Status tidak valid!" });
+    }
+
+    const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+
+    if (!order) {
+      return res.status(404).json({ message: "Pesanan tidak ditemukan!" });
+    }
+
+    res.status(200).json({ message: "Status pesanan diperbarui!", order });
+  } catch (error) {
+    res.status(500).json({ message: "Gagal memperbarui status pesanan", error: error.message });
+  }
+};
+
+export const deleteOrder = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+
+    const order = await Order.findByIdAndDelete(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Pesanan tidak ditemukan!" });
+    }
+
+    res.status(200).json({ message: "Pesanan berhasil dihapus!" });
+  } catch (error) {
+    res.status(500).json({ message: "Gagal menghapus pesanan", error: error.message });
+  }
+};
+
+
 export const getOrderStats = async (req, res) => {
   try {
     // Hitung total revenue dari totalAmount di semua orders

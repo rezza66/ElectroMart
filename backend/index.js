@@ -1,4 +1,4 @@
-import express  from "express";
+import express from "express";
 import cors from "cors";
 import { connectDB } from "./configs/database.js";
 import dotenv from 'dotenv';

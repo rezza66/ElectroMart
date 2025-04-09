@@ -12,6 +12,9 @@ import AddProduct from "./pages/AddProduct";
 import UserList from "./pages/UserList";
 import RoleBasedRoute from "./components/RoleBaseRoute/RoleBaseRoute";
 import AccessDenied from "./components/AccessDenied/AccessDenied";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
+import CheckoutPage from "./pages/Checkout";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -31,6 +34,21 @@ function App() {
         <Route path='/cart' element={
           <RoleBasedRoute allowedRoles={['user']}>
             <CartPage />
+          </RoleBasedRoute>
+        } />
+        <Route path='/checkout' element={
+          <RoleBasedRoute allowedRoles={['user']}>
+            <CheckoutPage />
+          </RoleBasedRoute>
+        } />
+        <Route path='/profile' element={
+          <RoleBasedRoute allowedRoles={['user']}>
+            <Profile />
+          </RoleBasedRoute>
+        } />
+        <Route path='/edit-profile' element={
+          <RoleBasedRoute allowedRoles={['user']}>
+            <EditProfile />
           </RoleBasedRoute>
         } />
         <Route path='/dashboard' element={

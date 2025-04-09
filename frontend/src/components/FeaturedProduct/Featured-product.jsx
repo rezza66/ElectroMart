@@ -75,7 +75,7 @@ function FeaturedProducts() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="bg-neutral-600 text-white py-12 md:px-20">
+    <div className="bg-neutral-600 text-white py-12 pb-20 md:px-20">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {featuredProducts.map((product) => (

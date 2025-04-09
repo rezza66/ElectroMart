@@ -2,10 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart, removeFromCart } from "../redux/cartSlice";
 import { BASE_URL } from "../utils/config";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
 
   // Fungsi untuk mengubah kuantitas item
   const handleQuantityChange = (cartItemId, newQty) => {
@@ -117,7 +119,9 @@ const CartPage = () => {
               <span className="text-lg font-bold text-gray-800">
                 Total: {formatCurrency(totalPrice)}
               </span>
-              <button className="px-6 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600">
+              <button className="px-6 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600"
+              onClick={() => navigate("/checkout")}
+              >
                 Proceed to Checkout
               </button>
             </div>

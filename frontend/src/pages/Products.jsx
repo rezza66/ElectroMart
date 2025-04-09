@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { fetchAllProducts } from "../redux/productSlice";
 import { addToCart } from "../redux/cartSlice";
-import { Search, Star, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../utils/config";
 import axios from "axios";

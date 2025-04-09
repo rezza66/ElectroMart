@@ -1,4 +1,4 @@
-import { registerValidation } from "../configs/validation.js";
+import { registerValidation, loginValidation } from "../configs/validation.js";
 import User from "../models/UserModel.js";
 import generateToken from "../utils/generateToken.js";
 
@@ -52,6 +52,12 @@ export const registerUser = async (req, res, next) => {
 
 export const loginUser = async (req, res) => {
   try {
+
+    const { error } = loginValidation(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+    
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });

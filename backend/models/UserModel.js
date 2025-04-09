@@ -43,4 +43,4 @@ userSchema.pre("save", async function (next) {
     return await bcrypt.compare(enteredPassword, this.password);
   };
 
-export default mongoose.model("Users", userSchema);
+export default mongoose.model("User", userSchema);
