@@ -1,6 +1,6 @@
 import express  from "express";
 import { deleteUser, getUserById, getUserProfile, getUsers, saveUser, updateUser } from "../controllers/UserController.js";
-import { upload } from "../configs/multer.js";
+import { upload } from "../middleware/uploadUser.js";
 import protect from "../middleware/authMiddleware.js";
 import authorize from "../middleware/roleMiddleware.js";
 

@@ -5,7 +5,6 @@ import { addToCart } from "../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { X } from "lucide-react";
-import { BASE_URL } from "../../utils/config";
 
 function WeeklyTopSelling() {
   const dispatch = useDispatch();
@@ -92,12 +91,12 @@ function WeeklyTopSelling() {
         {weeklyTopSellings.map((product) => (
           <div
             key={product._id}
-            className="bg-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
+            className="bg-green4 rounded-lg shadow-md overflow-hidden cursor-pointer"
             onClick={() => handleProductClick(product)}
           >
             <div className="relative w-full h-48">
               <img
-                src={`${BASE_URL}/${product.picture}`}
+                src={product.picture}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -138,7 +137,7 @@ function WeeklyTopSelling() {
               </button>
             </div>
             <img
-              src={`${BASE_URL}/${selectedProduct.picture}`}
+              src={selectedProduct.picture}
               alt={selectedProduct.name}
               className="w-full h-64 object-cover rounded-lg mb-4"
             />

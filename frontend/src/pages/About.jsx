@@ -26,9 +26,9 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen py-16 bg-slate-300">
+    <div className="min-h-screen py-16 bg-green2">
       {/* Hero Section */}
-      <div className="bg-blue-600 text-white py-16">
+      <div className="bg-green-600 text-teal-950 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold mb-4">Tentang ElectroStore</h1>
           <p className="text-xl max-w-2xl mx-auto">

@@ -110,9 +110,9 @@ const ProductPage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen py-16 bg-slate-300">
+    <div className="min-h-screen py-16 bg-green3">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-green2 shadow">
         <div className="container mx-auto px-20 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">
@@ -143,7 +143,7 @@ const ProductPage = () => {
               className={`flex items-center gap-2 px-4 py-2 rounded-full ${
                 selectedCategory === (category.name || "All")
                   ? "bg-blue-500 text-white"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
+                  : "bg-green4 text-gray-600 hover:bg-gray-100"
               }`}
             >
               {category.picture && (
@@ -163,12 +163,12 @@ const ProductPage = () => {
           {filteredProducts.map((product) => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+              className="bg-green4 rounded-lg shadow-md overflow-hidden cursor-pointer"
               onClick={() => handleProductClick(product)}
             >
               <div className="relative w-full h-48">
                 <img
-                  src={`${BASE_URL}/${product.picture[0]}`}
+                  src={product.picture[0]}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
@@ -214,7 +214,7 @@ const ProductPage = () => {
               </button>
             </div>
             <img
-              src={`${BASE_URL}/${selectedProduct.picture}`}
+              src={selectedProduct.picture}
               alt={selectedProduct.name}
               className="w-full h-64 object-cover rounded-lg mb-4"
             />

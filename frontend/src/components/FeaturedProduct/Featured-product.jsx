@@ -5,7 +5,6 @@ import { addToCart } from "../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { X } from "lucide-react";
-import { BASE_URL } from "../../utils/config";
 
 function FeaturedProducts() {
   const dispatch = useDispatch();
@@ -82,18 +81,18 @@ function FeaturedProducts() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="bg-neutral-600 text-white py-12 pb-20 md:px-20">
+    <div className="bg-green3 text-white py-12 pb-20 md:px-20">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {featuredProducts.map((product) => (
           <div
             key={product._id}
-            className="bg-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
+            className="bg-green4 rounded-lg shadow-md overflow-hidden cursor-pointer"
             onClick={() => handleProductClick(product)}
           >
             <div className="relative w-full h-48">
               <img
-                src={`${BASE_URL}/${product.picture}`}
+                src={product.picture}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -131,7 +130,7 @@ function FeaturedProducts() {
               </button>
             </div>
             <img
-              src={`${BASE_URL}/${selectedProduct.picture}`}
+              src={selectedProduct.picture}
               alt={selectedProduct.name}
               className="w-full h-64 object-cover rounded-lg mb-4"
             />

@@ -39,12 +39,12 @@ function Header() {
   };
 
   return (
-    <nav className="bg-orange-600 text-white py-4 px-4 md:px-20 shadow-md fixed top-0 left-0 w-full z-50">
+    <nav className="bg-green1 text-white py-4 px-4 md:px-20 shadow-md fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center">
           <h1 className="text-xl md:text-2xl font-bold">ElectroMart</h1>
-          
+
           {/* Mobile menu button */}
           <button
             className="ml-4 md:hidden text-white focus:outline-none"
@@ -198,7 +198,7 @@ function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-orange-600 pb-4 px-4">
+        <div className="md:hidden bg-green2 pb-4 px-4">
           <div className="flex flex-col space-y-3 pt-3">
             <NavLink
               to="/"
@@ -246,7 +246,7 @@ function Header() {
                   <>
                     <NavLink
                       to="/profile"
-                      className="block py-2 px-4 text-white hover:bg-orange-700 rounded"
+                      className="block py-2 px-4 text-white bg-green4 hover:bg-green-600 rounded"
                       onClick={() => {
                         toggleMobileMenu();
                         closeDropdown();
@@ -256,7 +256,7 @@ function Header() {
                     </NavLink>
                     <NavLink
                       to="/orders"
-                      className="block py-2 px-4 text-white hover:bg-orange-700 rounded"
+                      className="block py-2 px-4 text-white bg-green4 hover:bg-green-600 rounded"
                       onClick={() => {
                         toggleMobileMenu();
                         closeDropdown();
@@ -269,7 +269,7 @@ function Header() {
                 {user.role === "admin" && (
                   <NavLink
                     to="/dashboard"
-                    className="block py-2 px-4 text-white hover:bg-orange-700 rounded"
+                    className="block py-2 px-4 text-white bg-green4 hover:bg-green-600 rounded"
                     onClick={() => {
                       toggleMobileMenu();
                       closeDropdown();
@@ -283,7 +283,7 @@ function Header() {
                     handleLogout();
                     toggleMobileMenu();
                   }}
-                  className="w-full text-left py-2 px-4 bg-white text-orange-600 font-semibold rounded hover:bg-gray-100"
+                  className="w-full text-left py-2 px-4 bg-green4 text-white font-semibold rounded hover:bg-green-600"
                 >
                   Logout
                 </button>
@@ -291,7 +291,7 @@ function Header() {
             ) : (
               <NavLink
                 to="/signup"
-                className="block py-2 px-4 bg-white text-orange-600 font-semibold rounded hover:bg-gray-100 text-center"
+                className="block py-2 px-4 bg-green4 text-white font-semibold rounded hover:bg-green-600 text-center"
                 onClick={toggleMobileMenu}
               >
                 Signup

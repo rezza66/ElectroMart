@@ -48,7 +48,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto my-10 mt-14 bg-white shadow-lg rounded-2xl overflow-hidden">
+    <div className="max-w-3xl mx-auto my-10 mt-14 bg-green3 shadow-lg rounded-2xl overflow-hidden">
       {/* Cover Image and Profile Picture */}
       <div
         className="relative h-56 flex items-end justify-center"

@@ -6,7 +6,7 @@ function Home() {
 
   return (
     <>
-    <div className="py-16 bg-slate-300">
+    <div className="py-16 bg-green2">
     <TopImage />
     <FeaturedProducts />
     <WeeklyTopSelling />

@@ -118,7 +118,9 @@ const OrdersPage = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {userOrders.map((order) => (
+                  {userOrders
+                  .filter(order => order.products && order.products.length > 0 && order.products[0].product)
+                  .map((order) => (
                     <tr key={order._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         #{order._id.slice(-6).toUpperCase()}

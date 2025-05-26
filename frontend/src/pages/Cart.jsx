@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart, removeFromCart } from "../redux/cartSlice";
-import { BASE_URL } from "../utils/config";
 import { useNavigate } from "react-router-dom";
 import { createOrderWithPayment } from "../redux/orderSlice";
 import Swal from "sweetalert2";
@@ -173,7 +172,7 @@ const CartPage = () => {
                         <td className="px-4 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <img
-                              src={`${BASE_URL}/${item.picture ? item.picture.replace(/\\/g, "/") : "default-image.jpg"}`}
+                              src={`${item.picture ? item.picture : "default-image.jpg"}`}
                               alt={item.name}
                               className="w-12 h-12 md:w-16 md:h-16 object-cover rounded"
                             />
@@ -227,7 +226,7 @@ const CartPage = () => {
                   <div className="flex justify-between">
                     <div className="flex items-center space-x-3">
                       <img
-                        src={`${BASE_URL}/${item.picture ? item.picture.replace(/\\/g, "/") : "default-image.jpg"}`}
+                        src={`${item.picture ? item.picture : "default-image.jpg"}`}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded"
                       />
