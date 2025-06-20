@@ -53,10 +53,12 @@ Buat file .env di folder backend seperti berikut:
 
 Buat file .env di folder frontend seperti berikut:
 - VITE_BASE_URL=http://localhost:5004
-- VITE_MIDTRANS_CLIENT_KEY=Mid-client-uSpTOwxrl9sFgP5b
+- VITE_MIDTRANS_CLIENT_KEY=your_vite_midtrans_client_key
 
 Buat file .env di folder frontend seperti berikut:
 - VITE_BASE_URL=your_base_url
 - VITE_IMAGE_BASE_URL=your_image_base_url
 
-🧑‍💻 Author Reza Pratama
+🧑‍💻 Author
+
+Reza Pratama
