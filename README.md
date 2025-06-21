@@ -1,15 +1,17 @@
-⚡️ Electro Mart – Aplikasi E‑Commerce Elektronik
+# ⚡️ Electro Mart
 
-✨ Fitur
+A complete **MERN stack** application to browse, purchase, and manage electronic products.
 
-- 🛍️ Lihat, cari, dan checkout produk elektronik  
-- 🔒 Autentikasi JWT + Passport  
-- 📤 Upload gambar produk ke Cloudinary  
-- 💳 Pembayaran Midtrans  
-- 🧑‍💼 Dashboard admin (kelola produk, pesanan, dan user)  
-- ♻️ Redux Persist (menyimpan state di browser)
+## ✨ Features
 
-🛠️ Teknologi
+- 🛍️ View, search and checkout electronic products
+- 🔒 JWT + Passport Authentication 
+- 📤 Upload product images to Cloudinary
+- 💳 Midtrans Payment
+- 🧑‍💼 Admin dashboard (manage products, orders, and users)  
+- ♻️ ReduxPersist (save state in browser)
+
+## 🛠️ Technology
 
 | Layer     | Stack                                                                           |
 |-----------|---------------------------------------------------------------------------------|
@@ -17,30 +19,37 @@
 | **Frontend**| React 18 + Vite ・ Tailwind CSS ・ React Router DOM v7 ・ Redux Toolkit (+ Persist) ・ Axios ・ SweetAlert2 ・ Recharts / Chart.js |
 | **DevTools**| Nodemon ・ ESLint + eslint‑plugin‑react ・ Vite Preview |
 
-🚀 Cara Menjalankan
+## 🚀 Quick Start
 
-Clone project
+### 1. Clone the repository
 
 - https://github.com/rezza66/ElectroMart.git
 - cd ElectroMart
 
-Jalankan backend
+### 2. Run with Docker Compose (recommended)
+
+- docker compose up -d --build
+- docker compose logs -f
+
+### 3. Run manually (without Docker)
+
+backend
 
 - cd backend 
 - npm install 
 - npm run dev
 
-Jalankan frontend
+frontend
 
 - cd frontend 
 - npm install 
 - npm run dev
 
-📦 Note: Backend menggunakan nodemon untuk development. Pastikan sudah ter-install secara global atau lokal.
+📦 Note: Backend uses nodemon for development. Make sure it is installed globally or locally.
 
-⚙️ Konfigurasi .env
+## ⚙️ Environment Variables
 
-Buat file .env di folder backend seperti berikut:
+Create a .env file in the backend folder as follows:
 
 - PORT=5004
 - SECRET_KEY=your_secret_key
@@ -51,14 +60,7 @@ Buat file .env di folder backend seperti berikut:
 - CLOUDINARY_API_KEY=your_cloudinary_api_key
 - CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-Buat file .env di folder frontend seperti berikut:
+Create a .env file in the frontend folder as follows:
 - VITE_BASE_URL=http://localhost:5004
-- VITE_MIDTRANS_CLIENT_KEY=your_vite_midtrans_client_key
-
-Buat file .env di folder frontend seperti berikut:
-- VITE_BASE_URL=your_base_url
 - VITE_IMAGE_BASE_URL=your_image_base_url
-
-🧑‍💻 Author
-
-Reza Pratama
+- VITE_MIDTRANS_CLIENT_KEY=your_vite_midtrans_client_key
